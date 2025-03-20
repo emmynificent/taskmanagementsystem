@@ -4,10 +4,10 @@ namespace TaskManagementSystem.Models{
         public int Id {get; set;}
         public string Text {get; set;}
         public DateTime Created {get; set;}
-        public int WorkItemId {get; set;}
-        public int UserId {get; set;}
-        public WorkItem WorkItem {get; set;}
-        public UserModel User {get; set;}
+        public int? WorkItemId {get; set;} = null;
+        public int ?UserId {get; set;} = null;
+        public WorkItem? WorkItem {get; set;} =null;
+        public UserModel? User {get; set;} = null;
 
     }
 }

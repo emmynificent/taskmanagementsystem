@@ -32,7 +32,11 @@ namespace TaskManagementSystem.Controller
             if( Id <= 0)
             {return BadRequest("Invalid Id");}
             try{
+                if(!await _workRepository.WorkExist(Id))
+                {return NotFound($"Search Item not found");}
+
                 var work = await _workRepository.GetWorkItem(Id);
+                
                 var workMap = _mapper.Map<WorkItemOutputDto>(work);
                 return Ok(workMap);
             }
@@ -45,15 +49,18 @@ namespace TaskManagementSystem.Controller
         [HttpPut("UpdateWork")]
         public async Task<IActionResult> UpdateWork(int workId, WorkItemInputDto workItem)
         {
-            if(workId <= 0)
+            if(workId <= 0 && !await _workRepository.WorkExist(workId))
             {return BadRequest("Invalid Request");}
-            var getWork = await _workRepository.GetWorkItem(workId);
-            _mapper.Map(getWork, workItem);
-            if(!await _workRepository.UpdateWorkItemAsync(getWork))
+            var retrievedWork = await _workRepository.GetWorkItem(workId);
+            if(retrievedWork is null)
+            {return BadRequest();}
+            _mapper.Map(workItem, retrievedWork);
+            if(await _workRepository.UpdateWorkItemAsync(retrievedWork))
             {
-                return StatusCode(500, "An error occured");
+                return NoContent();
             }
-            return NoContent();
+            return BadRequest("An error occured");
+
         }
 
 
@@ -81,9 +88,24 @@ namespace TaskManagementSystem.Controller
             }
             await _workRepository.DeleteWorkItem(deleteWorkItem);
             return Ok();
-            
-            
         }
+        // [HttpPut("updatestatus/")]
+        // public async Task <IActionResult> UpdateTaskStatus(int workId, WorkItemInputDto workItem)
+        // {
+        //     if(workId <= 0)
+        //     {return BadRequest("Invalid Input");}
+        //     var work = await _workRepository.GetWorkItem(workId);
+        //     if(work is null)
+        //     {return BadRequest("an Error occured");}
+        //     _mapper.Map(work, workItem);
+        //     if(!await _workRepository.UpdateTaskStatus(work))
+        //     {
+        //         return StatusCode(500, "An Error Occured");
+        //     }
+        //     return NoContent();
+        
+
+        // }
 
     }
 }

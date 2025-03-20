@@ -45,3 +45,4 @@ app.UseHttpsRedirection();
 app.Run();
 
 
+//we would be focusing on the WorkItem and the Project and the User part. Notifications and the other models would be integrated as we go on.

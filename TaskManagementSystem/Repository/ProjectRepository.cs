@@ -22,15 +22,15 @@ namespace TaskManagementSystem.Repository{
 
         public async Task<Project> GetProject(int Id)
         {
-            var project = await _dbContext.projects.Where(p => p.Id == Id)
+            var project = await _dbContext.projects.Where(p => p.Id == Id).Include(p => p.WorkItems)
             .FirstOrDefaultAsync();
             return project;
 
         }
-
+  
         public async Task<ICollection<Project>> GetProjectsAsync()
         {
-            var projects = await _dbContext.projects.ToListAsync();
+            var projects = await _dbContext.projects.Include(p => p.WorkItems).ToListAsync();
             return projects;
         }
 //check this method soon
@@ -49,5 +49,7 @@ namespace TaskManagementSystem.Repository{
             var saved = await _dbContext.SaveChangesAsync();
             return saved > 0? true : false;
         }
+
+      
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using TaskManagementSystem.Data;
 namespace TaskManagementSystem.Migrations
 {
     [DbContext(typeof(TaskManagementDbContext))]
-    partial class TaskManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250319114058_workItemCheck")]
+    partial class workItemCheck
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,11 +193,6 @@ namespace TaskManagementSystem.Migrations
                         {
                             Id = 2,
                             ProjectName = "E-commerce Platform"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ProjectName = "AI-Integration"
                         });
                 });
 
@@ -348,8 +346,7 @@ namespace TaskManagementSystem.Migrations
 
                     b.HasOne("TaskManagementSystem.Models.Project", "Project")
                         .WithMany("WorkItems")
-                        .HasForeignKey("projectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("projectId");
 
                     b.Navigation("AssignedUser");
 

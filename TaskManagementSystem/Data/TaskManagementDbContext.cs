@@ -42,6 +42,13 @@ namespace TaskManagementSystem.Data
         .WithMany()
         .HasForeignKey(w => w.UserId)
         .OnDelete(DeleteBehavior.NoAction);
+        
+        modelBuilder.Entity<WorkItem>()
+        .HasOne(w => w.Project)
+        .WithMany(p => p.WorkItems)
+        .HasForeignKey(w => w.projectId)
+        .OnDelete(DeleteBehavior.Cascade);
+        
 
           modelBuilder.Entity<UserModel>().HasData(
                 new UserModel { Id = 1, FullName = "John Doe", Email = "john@example.com", Created = new DateTime(2025, 3, 15) },
@@ -50,7 +57,8 @@ namespace TaskManagementSystem.Data
 
             modelBuilder.Entity<Project>().HasData(
                 new Project { Id = 1, ProjectName = "Task Management System" },
-                new Project { Id = 2, ProjectName = "E-commerce Platform" }
+                new Project { Id = 2, ProjectName = "E-commerce Platform" },
+                new Project { Id = 3, ProjectName = "AI-Integration"}
             );
 
             modelBuilder.Entity<WorkItem>().HasData(

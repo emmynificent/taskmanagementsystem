@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using TaskManagementSystem.Data;
 namespace TaskManagementSystem.Migrations
 {
     [DbContext(typeof(TaskManagementDbContext))]
-    partial class TaskManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250318165810_changes")]
+    partial class changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +40,10 @@ namespace TaskManagementSystem.Migrations
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WorkItemId")
+                    b.Property<int>("WorkItemId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -85,10 +88,10 @@ namespace TaskManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WorkItemId")
+                    b.Property<int>("WorkItemId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -190,11 +193,6 @@ namespace TaskManagementSystem.Migrations
                         {
                             Id = 2,
                             ProjectName = "E-commerce Platform"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ProjectName = "AI-Integration"
                         });
                 });
 
@@ -246,7 +244,7 @@ namespace TaskManagementSystem.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AssignedUserId")
+                    b.Property<int>("AssignedUserId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -256,12 +254,12 @@ namespace TaskManagementSystem.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("projectId")
-                        .HasColumnType("int");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -270,7 +268,7 @@ namespace TaskManagementSystem.Migrations
 
                     b.HasIndex("AssignedUserId");
 
-                    b.HasIndex("projectId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("workItems");
 
@@ -300,12 +298,14 @@ namespace TaskManagementSystem.Migrations
                     b.HasOne("TaskManagementSystem.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TaskManagementSystem.Models.WorkItem", "WorkItem")
                         .WithMany()
                         .HasForeignKey("WorkItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
 
@@ -317,12 +317,14 @@ namespace TaskManagementSystem.Migrations
                     b.HasOne("TaskManagementSystem.Models.UserModel", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("TaskManagementSystem.Models.WorkItem", "WorkItem")
                         .WithMany("comments")
                         .HasForeignKey("WorkItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
 
@@ -344,16 +346,15 @@ namespace TaskManagementSystem.Migrations
                 {
                     b.HasOne("TaskManagementSystem.Models.UserModel", "AssignedUser")
                         .WithMany("WorkItems")
-                        .HasForeignKey("AssignedUserId");
+                        .HasForeignKey("AssignedUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("TaskManagementSystem.Models.Project", "Project")
+                    b.HasOne("TaskManagementSystem.Models.Project", null)
                         .WithMany("WorkItems")
-                        .HasForeignKey("projectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProjectId");
 
                     b.Navigation("AssignedUser");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("TaskManagementSystem.Models.Project", b =>

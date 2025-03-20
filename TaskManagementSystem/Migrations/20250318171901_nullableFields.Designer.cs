@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TaskManagementSystem.Data;
 
@@ -11,9 +12,11 @@ using TaskManagementSystem.Data;
 namespace TaskManagementSystem.Migrations
 {
     [DbContext(typeof(TaskManagementDbContext))]
-    partial class TaskManagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250318171901_nullableFields")]
+    partial class nullableFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,11 +193,6 @@ namespace TaskManagementSystem.Migrations
                         {
                             Id = 2,
                             ProjectName = "E-commerce Platform"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ProjectName = "AI-Integration"
                         });
                 });
 
@@ -256,12 +254,12 @@ namespace TaskManagementSystem.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("projectId")
-                        .HasColumnType("int");
 
                     b.Property<int>("status")
                         .HasColumnType("int");
@@ -270,7 +268,7 @@ namespace TaskManagementSystem.Migrations
 
                     b.HasIndex("AssignedUserId");
 
-                    b.HasIndex("projectId");
+                    b.HasIndex("ProjectId");
 
                     b.ToTable("workItems");
 
@@ -346,14 +344,11 @@ namespace TaskManagementSystem.Migrations
                         .WithMany("WorkItems")
                         .HasForeignKey("AssignedUserId");
 
-                    b.HasOne("TaskManagementSystem.Models.Project", "Project")
+                    b.HasOne("TaskManagementSystem.Models.Project", null)
                         .WithMany("WorkItems")
-                        .HasForeignKey("projectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProjectId");
 
                     b.Navigation("AssignedUser");
-
-                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("TaskManagementSystem.Models.Project", b =>

@@ -22,6 +22,7 @@ namespace TaskManagementSystem.Controller
         public async Task <IActionResult> GetProjects()
         {
             var projects =  await _projectRepository.GetProjectsAsync();
+            //var projectMap = _mapper.Map<List<ProjectOutputDto>>(projects);
 
             return Ok(projects);
         }

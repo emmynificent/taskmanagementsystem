@@ -9,6 +9,8 @@ namespace TaskManagementSystem.Interface
         Task <bool> UpdateWorkItemAsync (WorkItem existingworkItem);
         Task <WorkItem> GetWorkItem(int Id);
         Task<WorkItem> DeleteWorkItem(WorkItem workId);
+        Task<bool> UpdateTaskStatus (WorkItem workStatus);
+        Task<bool> WorkExist(int Id);
         
     }
 }
