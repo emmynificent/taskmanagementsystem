@@ -8,11 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Automapper" Version="14.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.13" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFramework.SqlServer" Version="6.5.1" />
     <PackageReference Include="Microsoft.EntityFrameWorkCore" Version="9.0.3" />
     <PackageReference Include="Microsoft.EntityFrameWorkCore.Design" Version="9.0.3">
+
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

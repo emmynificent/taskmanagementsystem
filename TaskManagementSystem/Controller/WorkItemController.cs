@@ -89,23 +89,8 @@ namespace TaskManagementSystem.Controller
             await _workRepository.DeleteWorkItem(deleteWorkItem);
             return Ok();
         }
-        // [HttpPut("updatestatus/")]
-        // public async Task <IActionResult> UpdateTaskStatus(int workId, WorkItemInputDto workItem)
-        // {
-        //     if(workId <= 0)
-        //     {return BadRequest("Invalid Input");}
-        //     var work = await _workRepository.GetWorkItem(workId);
-        //     if(work is null)
-        //     {return BadRequest("an Error occured");}
-        //     _mapper.Map(work, workItem);
-        //     if(!await _workRepository.UpdateTaskStatus(work))
-        //     {
-        //         return StatusCode(500, "An Error Occured");
-        //     }
-        //     return NoContent();
         
 
-        // }
-
     }
+
 }

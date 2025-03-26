@@ -3,7 +3,6 @@ using TaskManagementSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagementSystem.Interface;
 using TaskManagementSystem.DTO;
-
 namespace TaskManagementSystem.Controller
 {
     [Route("api/[controller]")]
@@ -11,6 +10,7 @@ namespace TaskManagementSystem.Controller
     public class UserController : ControllerBase
     {
         private readonly IUserModel _userRepository;
+        //private readonly UserManager _userManager;
         private readonly IMapper _mapper;
         public UserController(IUserModel userRepository, IMapper mapper)
         {

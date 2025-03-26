@@ -6,7 +6,7 @@ namespace TaskManagementSystem.Models
         public string NoticeMessage {get; set;}
         public DateTime NoticeCreated {get; set;}
         public bool IsRead {get; set;} = false;
-        public int UserId {get; set;}
+        public string UserId {get; set;}
         public UserModel? User {get; set;}
     }
 }

@@ -5,7 +5,7 @@ namespace TaskManagementSystem.Models{
         public string Text {get; set;}
         public DateTime Created {get; set;}
         public int? WorkItemId {get; set;} = null;
-        public int ?UserId {get; set;} = null;
+        public string ?UserId {get; set;} = null;
         public WorkItem? WorkItem {get; set;} =null;
         public UserModel? User {get; set;} = null;
 
