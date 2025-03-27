@@ -10,6 +10,7 @@ using TaskManagementSystem.Data;
 using TaskManagementSystem.Interface;
 using TaskManagementSystem.Repository;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using TaskManagementSystem.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddScoped<IWorkItem, WorkRepository>();
 builder.Services.AddScoped<IProject, ProjectRepository>();
-//builder.Services.AddScoped<IUserModel, UserRepository>();
+builder.Services.AddScoped<IUserModel, UserRepository>();
 builder.Services.AddScoped<INotification, NotificationRepository>();
 
 
@@ -40,7 +41,7 @@ builder.Services.AddDbContext<TaskManagementDbContext>(options =>{
 
 });
 
-builder.Services.AddIdentity<IdentityUser,  IdentityRole>()
+builder.Services.AddIdentity<UserModel,  IdentityRole>()
 .AddEntityFrameworkStores<TaskManagementDbContext>()
 .AddDefaultTokenProviders();
 

@@ -20,7 +20,7 @@ namespace TaskManagementSystem.Controller
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _userRepository.GetUsers();
+            var users = await _userRepository.GetUsersAsync();
             return Ok(users);
         }
 

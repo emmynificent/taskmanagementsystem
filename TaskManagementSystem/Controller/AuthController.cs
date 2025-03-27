@@ -15,11 +15,11 @@ namespace TaskManagementSystem.Controller
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager <IdentityUser> _signInManager;
+        private readonly UserManager<UserModel> _userManager;
+        private readonly SignInManager <UserModel> _signInManager;
         private readonly JwtConfig _jwtConfig;
 
-        public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IOptions<JwtConfig> jwtConfig )
+        public AuthController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, IOptions<JwtConfig> jwtConfig )
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -34,16 +34,18 @@ namespace TaskManagementSystem.Controller
             {
                 return BadRequest(ModelState);
             }
-            var user = new IdentityUser{
+            var newUser = new UserModel{
                 UserName = registerModel.Email,
                 Email = registerModel.Email
             };
-            var result = await  _userManager.CreateAsync(user, registerModel.Password);
+            var result = await  _userManager.CreateAsync(newUser, registerModel.Password);
             if(!result.Succeeded)
             {
                 
                 return BadRequest(result.Errors);
             }
+
+            var userToken = GenerateJwtToken(newUser);
             return Ok(new {
                 Message = "User Registered successfully"
             });
@@ -73,12 +75,12 @@ namespace TaskManagementSystem.Controller
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> AllUsers()
-        {
-          var users =  _userManager.Users.ToList();
-          return Ok(users);
-        }
+        // [HttpGet]
+        // public async Task<IActionResult> AllUsers()
+        // {
+        //   var users =  .Users.ToList();
+        //   return Ok(users);
+        // }
 
         private string GenerateJwtToken(IdentityUser user)
         {

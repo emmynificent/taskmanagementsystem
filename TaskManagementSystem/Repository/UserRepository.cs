@@ -9,11 +9,10 @@ namespace TaskManagementSystem.Repository
     public class UserRepository : IUserModel
     {
         private readonly TaskManagementDbContext _dbContext;
-        private readonly UserManager<UserModel> _userManager;
-        public UserRepository(TaskManagementDbContext dbContext, UserManager<UserModel> userManager)
+        //private readonly UserManager<UserModel> _userManager;
+        public UserRepository(TaskManagementDbContext dbContext)
         {
             _dbContext = dbContext;
-            _userManager = userManager;
         }
         public async Task<UserModel> CreateUserAsync(UserModel user)
         {
@@ -28,7 +27,7 @@ namespace TaskManagementSystem.Repository
             return user;
         }
 
-        public async Task<ICollection<UserModel>> GetUsers()
+        public async Task<ICollection<UserModel>> GetUsersAsync()
         {
             var users = await _dbContext.Users.ToListAsync();
             return users;

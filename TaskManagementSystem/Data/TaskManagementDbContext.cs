@@ -13,7 +13,7 @@ namespace TaskManagementSystem.Data
         {
 
         }
-        //public DbSet<UserModel> userModels {get; set;}
+       // public DbSet<UserModel> userModels {get; set;}
         public DbSet<WorkItem> workItems {get; set;}
         public DbSet<Project> projects {get; set;}
         public DbSet<Notification> notifications{get; set;}
