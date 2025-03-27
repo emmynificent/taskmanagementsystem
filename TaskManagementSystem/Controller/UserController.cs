@@ -21,7 +21,9 @@ namespace TaskManagementSystem.Controller
         public async Task<IActionResult> GetUsers()
         {
             var users = await _userRepository.GetUsersAsync();
-            return Ok(users);
+            var userMapped = _mapper.Map<List<UserOutputDto>>(users);
+
+            return Ok(userMapped);
         }
 
         [HttpGet("GetUser{Id}")]

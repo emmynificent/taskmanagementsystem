@@ -16,10 +16,13 @@ namespace TaskManagementSystem.Mapper
             CreateMap<Project, ProjectInputDto>();
             CreateMap<UserModel, UserModelInputDto>();
             CreateMap<UserModelInputDto, UserModel>();
+            CreateMap<UserModel, UserOutputDto>();
+            CreateMap<UserOutputDto, UserModel>();
             CreateMap<Notification, NotificationInputDto>();
             CreateMap<NotificationInputDto, Notification>();
             CreateMap<NotificationOutput, Notification>();
             CreateMap<Notification, NotificationOutput>();
+            
             
     
         }

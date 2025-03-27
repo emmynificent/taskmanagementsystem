@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManagementSystem.Interface;
 using TaskManagementSystem.Models;
 using TaskManagementSystem.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TaskManagementSystem.Controller
 {
@@ -18,6 +19,7 @@ namespace TaskManagementSystem.Controller
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetWorks()
         {
@@ -26,6 +28,7 @@ namespace TaskManagementSystem.Controller
             return Ok(workMap);
         }
 
+        [Authorize]
         [HttpGet("work-item/{Id}")]
         public async Task<IActionResult> GetWork(int Id)
         {
@@ -46,6 +49,7 @@ namespace TaskManagementSystem.Controller
             }
         }
 
+        [Authorize]
         [HttpPut("UpdateWork")]
         public async Task<IActionResult> UpdateWork(int workId, WorkItemInputDto workItem)
         {
@@ -63,7 +67,7 @@ namespace TaskManagementSystem.Controller
 
         }
 
-
+        [Authorize]
         [HttpPost("CreateWork")]
         public async Task<IActionResult> CreateWork(WorkItemInputDto workItem)
         {
@@ -74,6 +78,7 @@ namespace TaskManagementSystem.Controller
             return Ok(createWork);
         }
 
+        [Authorize]
         [HttpDelete("DeleteWork")]
         public async Task<IActionResult> DeleteWork(int workId)
         {

@@ -1,5 +1,4 @@
 using System.Data.Entity.Core.Common.EntitySql;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using TaskManagementSystem.Data;
 using TaskManagementSystem.Interface;
@@ -14,7 +13,7 @@ namespace TaskManagementSystem.Repository
         {
             _tmanagementDbase = tmanagementDbase;  
         }
-
+        
         public async Task<WorkItem> CreateWorkItemAsync(WorkItem workItem)
         {
 
@@ -51,7 +50,8 @@ namespace TaskManagementSystem.Repository
 
         public async Task<ICollection<WorkItem>> GetWorkItems()
         {
-            var workItems = await _tmanagementDbase.workItems.ToListAsync();
+            var workItems = await _tmanagementDbase.workItems.Include(w=> w.AssignedUser)
+            .ToListAsync();
             return workItems;
         }
 
