@@ -22,7 +22,9 @@ namespace TaskManagementSystem.Repository{
 
         public async Task<Project> GetProject(int Id)
         {
-            var project = await _dbContext.projects.Where(p => p.Id == Id).Include(p => p.WorkItems)
+            var project = await _dbContext.projects
+            .Where(p => p.Id == Id)
+           // .Include(p => p.WorkItems)
             .FirstOrDefaultAsync();
             return project;
 

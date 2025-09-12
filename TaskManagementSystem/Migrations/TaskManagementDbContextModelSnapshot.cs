@@ -203,53 +203,6 @@ namespace TaskManagementSystem.Migrations
                         });
                 });
 
-            modelBuilder.Entity("TaskManagementSystem.Models.Notification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("NoticeCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NoticeMessage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("notifications");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsRead = false,
-                            NoticeCreated = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            NoticeMessage = "Task assigned to you",
-                            UserId = "1"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsRead = false,
-                            NoticeCreated = new DateTime(2025, 3, 15, 0, 0, 0, 0, DateTimeKind.Utc),
-                            NoticeMessage = "New comment on your task",
-                            UserId = "2"
-                        });
-                });
-
             modelBuilder.Entity("TaskManagementSystem.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -307,6 +260,7 @@ namespace TaskManagementSystem.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -359,7 +313,7 @@ namespace TaskManagementSystem.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "9b37f161-4d33-4c39-aded-a1fcfe1f4a61",
+                            ConcurrencyStamp = "35fa92cb-f5e2-4b04-9bd8-e85883f1b282",
                             Created = new DateTime(2025, 3, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "fmlzur@gmail.com",
                             EmailConfirmed = true,
@@ -367,7 +321,7 @@ namespace TaskManagementSystem.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "AQAAAAIAAYagAAAAEPcESYX3lWBJknNMPPr2A24EXCDULY51GRImjr4nZz6DRIAfFGpPunJtMqKyM6dt",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d9524ec8-c8ef-4b04-9d6d-8d2ca4a49d93",
+                            SecurityStamp = "941e01bd-5686-4554-b874-357228cb9832",
                             TwoFactorEnabled = false,
                             UserName = "fmlzur@gmail.com"
                         },
@@ -375,7 +329,7 @@ namespace TaskManagementSystem.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bfcce291-bd1d-4815-b6f4-b0614656e455",
+                            ConcurrencyStamp = "35cfa2e6-5f0a-41a7-8df7-38296aa405b7",
                             Created = new DateTime(2025, 3, 11, 0, 0, 0, 0, DateTimeKind.Utc),
                             Email = "stevejobs@gmail.com",
                             EmailConfirmed = true,
@@ -383,7 +337,7 @@ namespace TaskManagementSystem.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "AQAAAAIAAYagAAAAELOyIdlI0ROGnZezdYeBR5llcJv4xUEO5qGXmLSp0GuBkIhaswBtXyzsLKxAArlv4w",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "7edb5126-5cb8-49af-8f0a-cc4897e5ec8e",
+                            SecurityStamp = "1db7312d-2245-4dba-80b7-0e6517fe3c09",
                             TwoFactorEnabled = false,
                             UserName = "stevejobs@gmail.com"
                         });
@@ -401,7 +355,6 @@ namespace TaskManagementSystem.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DueDate")
@@ -516,21 +469,10 @@ namespace TaskManagementSystem.Migrations
                     b.Navigation("WorkItem");
                 });
 
-            modelBuilder.Entity("TaskManagementSystem.Models.Notification", b =>
-                {
-                    b.HasOne("TaskManagementSystem.Models.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("TaskManagementSystem.Models.WorkItem", b =>
                 {
                     b.HasOne("TaskManagementSystem.Models.UserModel", "AssignedUser")
-                        .WithMany("WorkItems")
+                        .WithMany()
                         .HasForeignKey("AssignedUserId");
 
                     b.HasOne("TaskManagementSystem.Models.Project", "Project")
@@ -544,11 +486,6 @@ namespace TaskManagementSystem.Migrations
                 });
 
             modelBuilder.Entity("TaskManagementSystem.Models.Project", b =>
-                {
-                    b.Navigation("WorkItems");
-                });
-
-            modelBuilder.Entity("TaskManagementSystem.Models.UserModel", b =>
                 {
                     b.Navigation("WorkItems");
                 });

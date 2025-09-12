@@ -24,28 +24,55 @@ namespace TaskManagementSystem.Controller
             var userMapped = _mapper.Map<List<UserOutputDto>>(users);
 
             return Ok(userMapped);
-        }
 
-        [HttpGet("GetUser{Id}")]
-        public async Task<IActionResult> GetUser(int Id)
+        }
+        [HttpGet("GetUser{UserEmail}")]
+        public async Task<IActionResult> GetUser(string UserEmail)
         {
-            if(Id <= 0){
-                return BadRequest("Invalid Id");
-            }
-            var user = await _userRepository.GetUserModel(Id);
+            if (UserEmail == null)
+                return BadRequest("Invalid input");
+
+            
+            var user = await _userRepository.GetUserByEmail(UserEmail);
+            if (user == null)
+                return BadRequest("Something went wrong");
             return Ok(user);
         }
         
-        [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] UserModelInputDto user)
+
+        [HttpDelete("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(string userEmail)
         {
-            if(user == null){
-                return BadRequest("User is null");
+            if(userEmail == null){
+                return BadRequest("Invalid input");
             }
-            var createUser = _mapper.Map<UserModel>(user);
-            var createdUser = await _userRepository.CreateUserAsync(createUser);
-            return CreatedAtAction("GetUser", new {Id = createdUser.Id}, createdUser);
+            await _userRepository.DeleteUser(userEmail);
+            return Ok("User deleted successfully");
+
         }
-        
+        //Assigning roles
+        // [HttpPost]
+        // public async Task<IActionResult> AssignRole(string userMail)
+
+        // [HttpPost]
+        // public async Task<IActionResult> 
+
+
+        //this would be for profile creation at some point. the authcontroller would be handlng the login and registration.
+        // [HttpPost]
+        // public async Task<IActionResult> CreateUser([FromBody] UserModelInputDto user)
+        // {
+        //     if(user == null){
+        //         return BadRequest("User is null");
+        //     }
+        //     var createUser = _mapper.Map<UserModel>(user);
+        //     var createdUser = await _userRepository.CreateUserAsync(createUser);
+        //     return CreatedAtAction("GetUser", new {Id = createdUser.Id}, createdUser);
+        // }
+
     }
 }
+//sort out the creation of roles later, it's taking so much time to figure out right now
+
+
+

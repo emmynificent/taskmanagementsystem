@@ -21,10 +21,12 @@ namespace TaskManagementSystem.Repository
             return user;
         }
 
-        public async Task<UserModel> GetUserModel(int Id)
+        public async Task<UserModel> GetUserByEmail(string email)
         {
-            var user = await _dbContext.Users.FindAsync(Id);
-            return user;
+            var userEmail = await _dbContext.Users
+            .Where(u => u.Email == email)
+            .FirstOrDefaultAsync();
+            return userEmail;
         }
 
         public async Task<ICollection<UserModel>> GetUsersAsync()
@@ -33,13 +35,27 @@ namespace TaskManagementSystem.Repository
             return users;
         }
 
-        public async Task<ICollection<WorkItem>> GetWorkItems()
+        public async Task<UserModel> DeleteUser(string email)
         {
-            var workItems = await _dbContext.Users
-            .Include(u => u.WorkItems)
-            .ToListAsync();
-            return workItems.SelectMany(u => u.WorkItems).ToList();
+            var user =  await _dbContext.Users.Where(u=> u.Email == email).FirstOrDefaultAsync();
+            if(user!= null)
+            {
+                _dbContext.Users.Remove(user);
+                await _dbContext.SaveChangesAsync();
+            }
+            return user;
+
+
         }
+
+        // public async Task<ICollection<WorkItem>> GetWorkItems()
+        // {
+        //     var workItems = await _dbContext.Users
+        //     .Include(u => u.WorkItems)
+        //     .ToListAsync();
+        //     return workItems.SelectMany(u => u.WorkItems).ToList();
+        // }}
+
     }
 
 }

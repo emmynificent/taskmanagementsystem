@@ -6,8 +6,9 @@ namespace TaskManagementSystem.Interface
     {
         Task<ICollection<UserModel>> GetUsersAsync();
         Task<UserModel> CreateUserAsync(UserModel user);
-        Task<ICollection<WorkItem>> GetWorkItems();
-        Task<UserModel> GetUserModel(int Id);
+        //Task<ICollection<WorkItem>> GetWorkItems();
+        Task<UserModel> GetUserByEmail(string UserEmail);
+        Task<UserModel> DeleteUser(string UserEmail);
 
     }
 }

@@ -19,7 +19,7 @@ namespace TaskManagementSystem.Controller
             _mapper = mapper;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> GetWorks()
         {
@@ -28,7 +28,7 @@ namespace TaskManagementSystem.Controller
             return Ok(workMap);
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpGet("work-item/{Id}")]
         public async Task<IActionResult> GetWork(int Id)
         {
@@ -49,7 +49,7 @@ namespace TaskManagementSystem.Controller
             }
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpPut("UpdateWork")]
         public async Task<IActionResult> UpdateWork(int workId, WorkItemInputDto workItem)
         {
@@ -67,7 +67,7 @@ namespace TaskManagementSystem.Controller
 
         }
 
-        [Authorize]
+       // [Authorize]
         [HttpPost("CreateWork")]
         public async Task<IActionResult> CreateWork(WorkItemInputDto workItem)
         {
@@ -78,7 +78,7 @@ namespace TaskManagementSystem.Controller
             return Ok(createWork);
         }
 
-        [Authorize]
+       // [Authorize ]
         [HttpDelete("DeleteWork")]
         public async Task<IActionResult> DeleteWork(int workId)
         {
@@ -94,6 +94,22 @@ namespace TaskManagementSystem.Controller
             await _workRepository.DeleteWorkItem(deleteWorkItem);
             return Ok();
         }
+
+        // [HttpPatch]
+        // public async Task<IActionResult> UpdateStatus(int workId, WorkItemInputDto workItemInput)
+        // {
+        //     if(workId <= 0)
+        //     {
+        //         return BadRequest("input does not exist");
+        //     }
+        //     var wor = _workRepository.GetWorkItem(workId);
+        //     if (wor is null)
+        //     {
+        //         return NotFound("wor item not found");
+        //     }
+
+
+        // }
         
 
     }
