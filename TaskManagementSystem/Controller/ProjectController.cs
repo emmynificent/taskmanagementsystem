@@ -19,12 +19,12 @@ namespace TaskManagementSystem.Controller
         }
 
         [HttpGet]
-        public async Task <IActionResult> GetProjects()
+        public async Task <IActionResult> Projects()
         {
             var projects =  await _projectRepository.GetProjectsAsync();
-            //var projectMap = _mapper.Map<List<ProjectOutputDto>>(projects);
-
-            return Ok(projects);
+            var projectMap = _mapper.Map<List<ProjectOutputDto>>(projects);
+ 
+            return Ok(projectMap);
         }
 
         [HttpGet("GetProject/")]
@@ -35,11 +35,15 @@ namespace TaskManagementSystem.Controller
                 return BadRequest("Invalid Request");
             }
             var getProject = await _projectRepository.GetProject(projectId);
-            if(getProject is null)
+            //var getProjectMap = _mapper.Map<List<ProjectOutputDto>>(getProject);
+            var mapped = _mapper.Map<ProjectOutputDto>(getProject);
+
+            if(mapped != null)
             {
-                return NotFound();
+                return Ok(mapped);
             }
-            return Ok(getProject);
+            return Ok("No Project FOUND");
+
         }
 
         [HttpPost("CreateProject")]
@@ -49,7 +53,7 @@ namespace TaskManagementSystem.Controller
             {
                 return BadRequest("Invalid Request");                
             }
-            var CreateProject = _mapper.Map<Project>(project);
+            var CreateProject = _mapper.Map<Project>(project );
 
             await _projectRepository.CreateProjectAsync(CreateProject);
             return Ok("Project created");
@@ -63,12 +67,14 @@ namespace TaskManagementSystem.Controller
                 return BadRequest("Invalid Request");
             }
             var workItems = await _projectRepository.GetWorkItemsInProject(projectId);
-            if(workItems is null)
+            if (workItems == null)
             {
-                return NotFound();
+                return Ok("Project not found");
             }
             return Ok(workItems);
         }
+
+        
 
         [HttpPut("UpdateProject")]
         public async Task<IActionResult> UpdateProject(int projectId, ProjectInputDto project)

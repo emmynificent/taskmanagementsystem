@@ -22,7 +22,8 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IWorkItem, WorkRepository>();
 builder.Services.AddScoped<IProject, ProjectRepository>();
 builder.Services.AddScoped<IUserModel, UserRepository>();
-builder.Services.AddScoped<INotification, NotificationRepository>();
+builder.Services.AddScoped<IEmailService, MailServiceRepository>();
+//builder.Services.AddScoped<INotification, NotificationRepository>();
 
 
 
@@ -43,7 +44,8 @@ builder.Services.AddDbContext<TaskManagementDbContext>(options =>{
 
 builder.Services.AddIdentity<UserModel,  IdentityRole>()
 .AddEntityFrameworkStores<TaskManagementDbContext>()
-.AddDefaultTokenProviders();
+.AddDefaultTokenProviders()
+.AddRoles<IdentityRole>();
 
 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
@@ -77,9 +79,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseRouting();
+
 
 app.MapControllers();
+
+app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseHttpsRedirection();
 

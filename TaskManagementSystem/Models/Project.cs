@@ -5,6 +5,7 @@ namespace TaskManagementSystem.Models
     {
         public int Id {get; set;}
         public string ProjectName {get; set;}
-        public List<WorkItem>? WorkItems {get; set;} = new List<WorkItem>();     
+        public List<WorkItem>? WorkItems {get; set;} = new List<WorkItem>();  
+        //public User ProjectOwner {get; set;}   
     }
 }

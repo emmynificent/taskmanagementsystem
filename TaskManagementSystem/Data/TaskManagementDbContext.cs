@@ -16,7 +16,7 @@ namespace TaskManagementSystem.Data
        // public DbSet<UserModel> userModels {get; set;}
         public DbSet<WorkItem> workItems {get; set;}
         public DbSet<Project> projects {get; set;}
-        public DbSet<Notification> notifications{get; set;}
+        //public DbSet<Notification> notifications{get; set;}
         public DbSet<Comment> comments{get; set;}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -114,22 +114,22 @@ namespace TaskManagementSystem.Data
                 }
         );
 
-        modelBuilder.Entity<Notification>().HasData(
-            new Notification { 
-                Id = 1, 
-                NoticeMessage = "Task assigned to you", 
-                NoticeCreated = new DateTime(2025, 3, 15, 0, 0, 0, DateTimeKind.Utc), 
-                IsRead = false, 
-                UserId = "1" 
-                },
-            new Notification { 
-                Id = 2, 
-                NoticeMessage = "New comment on your task", 
-                NoticeCreated = new DateTime(2025, 3, 15,0, 0, 0, DateTimeKind.Utc), 
-                IsRead = false, 
-                UserId = "2" 
-                }
-        );
+        // modelBuilder.Entity<Notification>().HasData(
+        //     new Notification { 
+        //         Id = 1, 
+        //         NoticeMessage = "Task assigned to you", 
+        //         NoticeCreated = new DateTime(2025, 3, 15, 0, 0, 0, DateTimeKind.Utc), 
+        //         IsRead = false, 
+        //         UserId = "1" 
+        //         },
+        //     new Notification { 
+        //         Id = 2, 
+        //         NoticeMessage = "New comment on your task", 
+        //         NoticeCreated = new DateTime(2025, 3, 15,0, 0, 0, DateTimeKind.Utc), 
+        //         IsRead = false, 
+        //         UserId = "2" 
+        //         }
+        // );
 
         }
         

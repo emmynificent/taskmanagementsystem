@@ -33,21 +33,20 @@ namespace TaskManagementSystem.Repository
 
         }
 
-        public async Task<WorkItem> DeleteWorkItem(WorkItem workItem)
+        public async Task<WorkItem> DeleteWorkItem(WorkItem workItem) 
         {
             _tmanagementDbase.workItems.Remove(workItem);
             await _tmanagementDbase.SaveChangesAsync();
             return workItem;
-        }
+        }       
 
         public async Task<WorkItem> GetWorkItem(int Id)
         {
             var work = await _tmanagementDbase.workItems
             .Where(q => q.Id == Id)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync();          
             return work;
         }
-
         public async Task<ICollection<WorkItem>> GetWorkItems()
         {
             var workItems = await _tmanagementDbase.workItems.Include(w=> w.AssignedUser)
