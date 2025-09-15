@@ -48,6 +48,10 @@ builder.Services.AddIdentity<UserModel,  IdentityRole>()
 .AddRoles<IdentityRole>();
 
 
+builder.Configuration.AddJsonFile("appsettings.json", optional:false, reloadOnChange:true)
+.AddEnvironmentVariables();
+
+
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
 
 
