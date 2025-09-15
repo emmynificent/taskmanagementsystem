@@ -68,7 +68,7 @@ namespace TaskManagementSystem.Controller
                 return Ok("User assigned new role");
             }
         }
-    
+
 
         [HttpPost("register")]  
 
@@ -98,7 +98,7 @@ namespace TaskManagementSystem.Controller
             var confirmationLink = Url.Action("ConfirmEmail", "Auth", new{
                 userId = newUser.Id, 
                 token = token,
-                email = newUser.Email
+                email =
 
             },
             Request.Scheme
@@ -199,6 +199,8 @@ namespace TaskManagementSystem.Controller
 
             
         }
+        
+
 
     }
 }
