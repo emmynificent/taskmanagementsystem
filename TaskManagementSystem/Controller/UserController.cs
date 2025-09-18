@@ -46,6 +46,11 @@ namespace TaskManagementSystem.Controller
             if(userEmail == null){
                 return BadRequest("Invalid input");
             }
+            var email = await _userRepository.GetUserByEmail(userEmail);
+            if (email == null)
+            {
+                return BadRequest("User does not exist or User has been deleted");
+            }
             await _userRepository.DeleteUser(userEmail);
             return Ok("User deleted successfully");
 

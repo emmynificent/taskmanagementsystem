@@ -27,9 +27,10 @@ namespace TaskManagementSystem.Controller
         //private Roles _roles;
         private string AdminRole = "Boss";
         //private string userEmail = "adminuser@gmail.com"; 
+        private readonly EmailSettings _emailSettings;
 
         private readonly RoleManager<IdentityRole> _roleManager;
-        public AuthController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, IOptions<JwtConfig> jwtConfig, IMapper mapper, RoleManager<IdentityRole> roleManager, IEmailService emailService)
+        public AuthController(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, IOptions<JwtConfig> jwtConfig, IMapper mapper, RoleManager<IdentityRole> roleManager, IEmailService emailService, IOptions<EmailSettings> emailSettings)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,7 +38,8 @@ namespace TaskManagementSystem.Controller
             _mapper = mapper;
             _emailService = emailService;
             _roleManager = roleManager;
-           // _roles = roles;
+            // _roles = roles;
+            _emailSettings = emailSettings.Value;
 
         }
 
@@ -98,7 +100,7 @@ namespace TaskManagementSystem.Controller
             var confirmationLink = Url.Action("ConfirmEmail", "Auth", new{
                 userId = newUser.Id, 
                 token = token,
-                email =
+                email =newUser.Email 
 
             },
             Request.Scheme
