@@ -11,6 +11,7 @@ namespace TaskManagementSystem.Interface
         Task<WorkItem> DeleteWorkItem(WorkItem workId);
         Task<bool> UpdateTaskStatus (WorkItem workStatus);
         Task<bool> WorkExist(int Id);
+        //Task<WorkItem> SearchWorkItem()
         
     }
 }

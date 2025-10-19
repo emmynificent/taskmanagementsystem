@@ -12,9 +12,12 @@
     using Microsoft.EntityFrameworkCore.Diagnostics;
     using TaskManagementSystem.Models;
 
-    var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "MyAllowSpecificOrigins";
 
+var builder = WebApplication.CreateBuilder(args);
+    
 
+builder.Configuration.AddUserSecrets<Program>();
     // Add services to the container.
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -68,14 +71,24 @@ builder.Services.AddAuthorization();
         ValidateIssuerSigningKey = true,
         ValidIssuer = jwtConfig.ValidIssuer,
         ValidAudience = jwtConfig.ValidAudience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("jwtConfig.Secret"))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret))
         };
 
     });
 
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+    policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
 
-    var app = builder.Build();
+var app = builder.Build();
 
     // Configure the HTTP request pipeline
     if (app.Environment.IsDevelopment())
@@ -84,7 +97,7 @@ builder.Services.AddAuthorization();
     app.UseSwaggerUI();
     }
 
-
+    app.UseCors(MyAllowSpecificOrigins);
 
     app.MapControllers();
 

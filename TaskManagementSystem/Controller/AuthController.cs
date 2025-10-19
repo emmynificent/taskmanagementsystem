@@ -103,11 +103,19 @@ namespace TaskManagementSystem.Controller
                 email =newUser.Email 
 
             },
-            Request.Scheme
+            Request.Scheme 
             );
-            await _emailService.SendEmailAsync(newUser.Email, "Confirm your email", $"Please confirm your email by clicking this link: <a href='{confirmationLink}'>link</a>");
 
-            return Ok("User Created Successfully. Please check your email to confirm your account");
+            var emailResult = await _emailService.SendEmailAsync(newUser.Email, "Confirm your email", $"Please confirm your email by clicking this link: <a href='{confirmationLink}'>link</a>");
+            if (emailResult == "Email Sent Successfully")
+            {
+                return Ok("User Created Successfully. Please check your email to confirm your account");
+            }
+            else
+            {
+                return StatusCode(500, $"User created, but failed to confrm mail. Reason:{emailResult}");
+            }
+
         }
 
         [HttpGet("confirm-email")]
