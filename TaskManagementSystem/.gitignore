@@ -3,3 +3,6 @@
 bin/
 obj/
 
+/taskmanagementsystem.sln
+/taskmanagementsystem/.vs/
+/taskmanagementsystem/.json
