@@ -5,6 +5,10 @@
 bin/
 obj/
 
+*.http
+*.csproj
+
+
 tms-project-ecf1f-firebase-adminsdk-fbsvc-e3e67c3414.json
 
 /taskmanagementsystem.sln
