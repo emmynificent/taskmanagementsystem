@@ -1,6 +1,5 @@
 *.vs
 *.json
 bin/
-!appsettings.json
-
+obj/
 
