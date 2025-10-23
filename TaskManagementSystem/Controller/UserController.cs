@@ -26,7 +26,7 @@ namespace TaskManagementSystem.Controller
             return Ok(userMapped);
 
         }
-        [HttpGet("GetUser{UserEmail}")]
+        [HttpGet("GetUser")]
         public async Task<IActionResult> GetUser(string UserEmail)
         {
             if (UserEmail == null)
